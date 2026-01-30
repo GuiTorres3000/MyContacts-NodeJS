@@ -1,8 +1,6 @@
 {
-  "name": "MyContacts-NodeJS",
-  "version": "1.0.0",
-  "description": "API to store contacts",
-  "main": "src/index.js",
-  "author": "GuiTorres3000",
-  "license": "MIT"
+  "dependencies": {
+    "express": "^5.2.1",
+    "yarn": "^1.22.22"
+  }
 }
