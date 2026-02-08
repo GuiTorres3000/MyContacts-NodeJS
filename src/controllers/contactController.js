@@ -1,17 +1,18 @@
 class ContactController {
-    index() {
+    index() { // Listar todos os contatos
+
     }
 
-    show() {
+    show() { // Obter um único contato
     }
 
-    store() {
+    store() { // Criar um novo contato
     }
 
-    update() {
+    update() { // Atualizar um contato existente
     }
 
-    delete() {
+    delete() { // Deletar um contato
     }
 }
 

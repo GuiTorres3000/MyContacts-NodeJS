@@ -5,11 +5,16 @@
   "repository": "https://github.com/GuiTorres3000/MyContacts-NodeJS",
   "author": "GuiTorres3000 <guilhermetorres3000@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.32.0",
-    "globals": "^17.3.0"
+    "globals": "^17.3.0",
+    "nodemon": "^3.1.11"
   }
 }
