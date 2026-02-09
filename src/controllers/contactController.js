@@ -1,6 +1,8 @@
-class ContactController {
-    index() { // Listar todos os contatos
 
+
+class ContactController {
+    index(request, response) { // Listar todos os contatos
+        response.send('List of contacts');
     }
 
     show() { // Obter um único contato
