@@ -5,12 +5,14 @@
   "repository": "https://github.com/GuiTorres3000/MyContacts-NodeJS",
   "author": "GuiTorres3000 <guilhermetorres3000@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",

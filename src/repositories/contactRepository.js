@@ -1,10 +1,12 @@
+import { v4 as uuid } from 'uuid';
+
 const contacts = [
-    { id: 1, name: 'John Doe', email: '' },
-    { id: 2, name: 'Jane Smith', email: '' },
-    { id: 3, name: 'Bob Johnson', email: '' }
+    { id: uuid(), name: 'John Doe', email: '', phone: '', category_id: uuid() },
+    { id: uuid(), name: 'Jane Smith', email: '', phone: '', category_id: uuid() },
+    { id: uuid(), name: 'Bob Johnson', email: '', phone: '', category_id: uuid() }
 ];
 
-class contactRepository {
+export default class ContactRepository {
     list() {
         return new Promise((resolve, reject) => {
             resolve(contacts);
