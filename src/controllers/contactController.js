@@ -1,8 +1,9 @@
-
+import contactRepository from '../repositories/contactRepository.js';
 
 class ContactController {
     index(request, response) { // Listar todos os contatos
-        response.send('List of contacts');
+        const contact = contactRepository.list();
+        response.json(contact);
     }
 
     show() { // Obter um único contato
