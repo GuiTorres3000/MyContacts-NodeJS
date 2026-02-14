@@ -1,6 +1,6 @@
 import ContactRepository from '../repositories/contactRepository.js';
 
-class ContactController {
+export default class ContactController {
 
     constructor() {
         this.contacts = new ContactRepository();
@@ -51,5 +51,3 @@ class ContactController {
         }
     }
 }
-
-export default new ContactController();
