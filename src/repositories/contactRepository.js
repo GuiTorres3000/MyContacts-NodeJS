@@ -1,8 +1,8 @@
-import { client } from '../database/index.js';
+import client from '../database/index.js';
 
 export default class ContactRepository {
     async list() {
-        const { rows } = await client.query('SELECT * FROM contacts');
+        const { rows } = await client.query('SELECT * FROM contacts ORDER BY name');
         return rows;
     }
 
