@@ -21,9 +21,9 @@ export default class ContactController {
     }
 
     store = async (request, response) => { // Criar um novo contato
-        const contactData = request.body; // Dados do contato a ser criado
+        const { name, email, phone, category_id } = request.body; // Dados do contato a ser criado
         try {
-            const newContact = await this.contacts.store(contactData);
+            const newContact = await this.contacts.store({ name, email, phone, category_id });
             response.status(201).json(newContact);
         } catch (error) {
             response.status(400).json({ error: error.message });
