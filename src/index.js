@@ -15,4 +15,15 @@ app.use((request, response, next) => {
 });
 
 app.use(routes);
+
+// Middleware de tratamento de erros (deve ficar DEPOIS das rotas)
+app.use((error, request, response, next) => {
+    console.error('Error:', error);
+
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'Internal Server Error';
+
+    response.status(statusCode).json({ error: message });
+});
+
 app.listen(3333, () => console.log('Server started on port 3333'));

@@ -14,7 +14,9 @@ export default class ContactRepository {
     async show(id) {
         const { rows } = await client.query(`SELECT * FROM contacts WHERE id = '${id}'`);
         if (rows.length === 0) {
-            throw new Error('Contact not found');
+            const error = new Error('Contact not found');
+            error.statusCode = 404;
+            throw error;
         }
         return rows[0];
     }
@@ -33,7 +35,9 @@ export default class ContactRepository {
             `UPDATE contacts SET name = '${name}', email = '${email}', phone = '${phone}', category_id = '${category_id}' WHERE id = '${id}' RETURNING *`
         );
         if (rows.length === 0) {
-            throw new Error('Contact not found');
+            const error = new Error('Contact not found');
+            error.statusCode = 404;
+            throw error;
         }
         return rows[0];
     }
@@ -41,7 +45,9 @@ export default class ContactRepository {
     async delete(id) {
         const { rowCount } = await client.query(`DELETE FROM contacts WHERE id = '${id}'`);
         if (rowCount === 0) {
-            throw new Error('Contact not found');
+            const error = new Error('Contact not found');
+            error.statusCode = 404;
+            throw error;
         }
     }
 }

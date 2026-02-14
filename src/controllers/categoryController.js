@@ -6,53 +6,54 @@ export default class CategoryController {
         this.categories = new CategoryRepository();
     }
 
-    index = async (request, response) => {
+    index = async (request, response, next) => {
         try {
             const { orderBy } = request.query;
-            response.json(await this.categories.list(orderBy));
+            const categories = await this.categories.list(orderBy);
+            response.json(categories);
         } catch (error) {
-            response.status(500).json({ error: error.message });
+            next(error);
         }
     }
 
-    show = async (request, response) => {
-        const id = request.params.id;
+    show = async (request, response, next) => {
         try {
+            const id = request.params.id;
             const category = await this.categories.show(id);
             response.json(category);
         } catch (error) {
-            response.status(404).json({ error: error.message });
+            next(error);
         }
     }
 
-    store = async (request, response) => {
-        const { name } = request.body;
+    store = async (request, response, next) => {
         try {
+            const { name } = request.body;
             const newCategory = await this.categories.store({ name });
             response.status(201).json(newCategory);
         } catch (error) {
-            response.status(400).json({ error: error.message });
+            next(error);
         }
     }
 
-    update = async (request, response) => {
-        const id = request.params.id;
-        const { name } = request.body;
+    update = async (request, response, next) => {
         try {
+            const id = request.params.id;
+            const { name } = request.body;
             const updatedCategory = await this.categories.update(id, { name });
             response.json(updatedCategory);
         } catch (error) {
-            response.status(404).json({ error: error.message });
+            next(error);
         }
     }
 
-    delete = async (request, response) => {
-        const id = request.params.id;
+    delete = async (request, response, next) => {
         try {
+            const id = request.params.id;
             await this.categories.delete(id);
             response.status(204).send();
         } catch (error) {
-            response.status(404).json({ error: error.message });
+            next(error);
         }
     }
 }

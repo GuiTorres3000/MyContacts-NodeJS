@@ -10,7 +10,9 @@ export default class CategoryRepository {
     async show(id) {
         const { rows } = await client.query(`SELECT * FROM categories WHERE id = '${id}'`);
         if (rows.length === 0) {
-            throw new Error('Category not found');
+            const error = new Error('Category not found');
+            error.statusCode = 404;
+            throw error;
         }
         return rows[0];
     }
@@ -29,7 +31,9 @@ export default class CategoryRepository {
             `UPDATE categories SET name = '${name}' WHERE id = '${id}' RETURNING *`
         );
         if (rows.length === 0) {
-            throw new Error('Category not found');
+            const error = new Error('Category not found');
+            error.statusCode = 404;
+            throw error;
         }
         return rows[0];
     }
@@ -37,7 +41,9 @@ export default class CategoryRepository {
     async delete(id) {
         const { rowCount } = await client.query(`DELETE FROM categories WHERE id = '${id}'`);
         if (rowCount === 0) {
-            throw new Error('Category not found');
+            const error = new Error('Category not found');
+            error.statusCode = 404;
+            throw error;
         }
     }
 }
