@@ -1,8 +1,9 @@
 import client from '../database/index.js';
 
 export default class CategoryRepository {
-    async list() {
-        const { rows } = await client.query('SELECT * FROM categories');
+    async list(orderBy = 'ASC') {
+        const order = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+        const { rows } = await client.query(`SELECT * FROM categories ORDER BY name ${order}`);
         return rows;
     }
 

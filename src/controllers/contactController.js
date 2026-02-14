@@ -7,7 +7,9 @@ export default class ContactController {
     }
 
     index = async (request, response) => { // Listar todos os contatos
-        response.json(await this.contacts.list());
+        const { orderBy } = request.query;
+        console.log('orderBy:', orderBy);
+        response.json(await this.contacts.list(orderBy));
     }
 
     show = async (request, response) => { // Obter um único contato

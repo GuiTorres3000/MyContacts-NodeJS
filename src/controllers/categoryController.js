@@ -8,7 +8,8 @@ export default class CategoryController {
 
     index = async (request, response) => {
         try {
-            response.json(await this.categories.list());
+            const { orderBy } = request.query;
+            response.json(await this.categories.list(orderBy));
         } catch (error) {
             response.status(500).json({ error: error.message });
         }

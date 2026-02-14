@@ -1,8 +1,13 @@
 import client from '../database/index.js';
 
 export default class ContactRepository {
-    async list() {
-        const { rows } = await client.query('SELECT * FROM contacts ORDER BY name');
+    async list(orderBy = 'ASC') {
+        const order = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+        const { rows } = await client.query(`
+            SELECT contacts.*, categories.name AS category_name FROM categories
+            LEFT JOIN contacts ON categories.id = contacts.category_id
+            ORDER BY name ${order}
+        `);
         return rows;
     }
 
