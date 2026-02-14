@@ -1,13 +1,15 @@
 CREATE DATABASE mycontacts;
 
+\connect mycontacts;
+
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE contacts (
+CREATE TABLE IF NOT EXISTS contacts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,

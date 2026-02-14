@@ -8,4 +8,6 @@ const client = new Client({
     password: 'root',
 });
 
-client.connect()
+client.connect();
+
+export default client;

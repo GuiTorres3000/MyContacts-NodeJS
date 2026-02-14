@@ -1,59 +1,42 @@
-import { v4 as uuid } from 'uuid';
-
-const contacts = [
-    { id: uuid(), name: 'Developer', email: 'developer@example.com', phone: '', category_id: uuid() },
-    { id: uuid(), name: 'Guy', email: 'guy@example.com', phone: '', category_id: uuid() },
-    { id: uuid(), name: 'Admin', email: 'admin@example.com', phone: '', category_id: uuid() }
-];
+import { client } from '../database/index.js';
 
 export default class ContactRepository {
-    list() {
-        return new Promise((resolve, reject) => {
-            resolve(contacts);
-        });
-    };
-
-    show(id) {
-        return new Promise((resolve, reject) => {
-            const contact = contacts.find(contact => contact.id === id);
-            if (contact) {
-                resolve(contact);
-            } else {
-                reject(new Error('Contact not found'));
-            }
-        });
+    async list() {
+        const { rows } = await client.query('SELECT * FROM contacts');
+        return rows;
     }
 
-    store(contact) {
-        return new Promise((resolve, reject) => {
-            const newContact = { id: uuid(), ...contact };
-            contacts.push(newContact);
-            resolve(newContact);
-        });
+    async show(id) {
+        const { rows } = await client.query(`SELECT * FROM contacts WHERE id = '${id}'`);
+        if (rows.length === 0) {
+            throw new Error('Contact not found');
+        }
+        return rows[0];
     }
 
-    update(id, updatedContact) {
-        return new Promise((resolve, reject) => {
-            const index = contacts.findIndex(contact => contact.id === id);
-            if (index !== -1) {
-                const updated = { ...contacts[index], ...updatedContact };
-                contacts[index] = updated;
-                resolve(updated);
-            } else {
-                reject(new Error('Contact not found'));
-            }
-        });
+    async store(contact) {
+        const { name, email, phone, category_id } = contact;
+        const { rows } = await client.query(
+            `INSERT INTO contacts (name, email, phone, category_id) VALUES ('${name}', '${email}', '${phone}', '${category_id}') RETURNING *`
+        );
+        return rows[0];
     }
 
-    delete(id) {
-        return new Promise((resolve, reject) => {
-            const index = contacts.findIndex(contact => contact.id === id);
-            if (index !== -1) {
-                contacts.splice(index, 1);
-                resolve();
-            } else {
-                reject(new Error('Contact not found'));
-            }
-        });
+    async update(id, updatedContact) {
+        const { name, email, phone, category_id } = updatedContact;
+        const { rows } = await client.query(
+            `UPDATE contacts SET name = '${name}', email = '${email}', phone = '${phone}', category_id = '${category_id}' WHERE id = '${id}' RETURNING *`
+        );
+        if (rows.length === 0) {
+            throw new Error('Contact not found');
+        }
+        return rows[0];
+    }
+
+    async delete(id) {
+        const { rowCount } = await client.query(`DELETE FROM contacts WHERE id = '${id}'`);
+        if (rowCount === 0) {
+            throw new Error('Contact not found');
+        }
     }
 }
